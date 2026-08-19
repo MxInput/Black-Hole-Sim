@@ -14,6 +14,8 @@ var finished := true;
 var offset := Vector2(576, 324);
 var time := 0.0;
 
+@export var drag_manager : Node;
+
 func move_camera() -> void:
 	if (!contact):
 		var background = current_screen.find_child("Background");

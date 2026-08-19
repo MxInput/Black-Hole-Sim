@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bot5e6f6segio" path="res://images/daisy.png" id="8_7aemw"]
 [ext_resource type="Texture2D" uid="uid://cgkkx6y1eawi4" path="res://images/frog.png" id="9_h1sum"]
 [ext_resource type="Texture2D" uid="uid://drd8mvfxwyuo7" path="res://images/cookie.png" id="10_h0f1k"]
+[ext_resource type="Script" uid="uid://cu67f3261iqg3" path="res://nodes/drag_manager.gd" id="11_7aemw"]
 
 [sub_resource type="Gradient" id="Gradient_kc3a4"]
 offsets = PackedFloat32Array(0.47530866, 1)
@@ -18,35 +19,6 @@ colors = PackedColorArray(0, 0, 0, 0.3764706, 0.02374674, 0.006960955, 0.1130927
 [node name="Main" type="Node" unique_id=670787970]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1105528811]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=396249878]
-
-[node name="LeftCollider" type="Control" parent="CanvasLayer" unique_id=1683079092]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 120.0
-offset_bottom = 648.0
-
-[node name="RightCollider" type="Control" parent="CanvasLayer" unique_id=1664569643]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1032.0
-offset_right = 1152.0
-offset_bottom = 648.0
-
-[node name="LeftArrow" type="TextureRect" parent="CanvasLayer" unique_id=686653009]
-offset_left = 997.0
-offset_top = 301.0
-offset_right = 1125.0
-offset_bottom = 429.0
-texture = ExtResource("1_ufc4x")
-
-[node name="RightArrow" type="TextureRect" parent="CanvasLayer" unique_id=521227202]
-offset_left = 30.0
-offset_top = 301.0
-offset_right = 158.0
-offset_bottom = 429.0
-texture = ExtResource("1_ufc4x")
 
 [node name="CameraManager" type="Node" parent="." unique_id=510813788 node_paths=PackedStringArray("camera", "main_screen", "black_hole_screen")]
 script = ExtResource("2_k8dvw")
@@ -70,6 +42,7 @@ offset_left = -283.0
 offset_top = -251.0
 offset_right = 290.0
 offset_bottom = 249.0
+mouse_filter = 1
 
 [node name="BlackHoleScreen" type="Node" parent="." unique_id=768830475]
 
@@ -110,6 +83,12 @@ scale_amount_max = 0.05
 color_ramp = SubResource("Gradient_kc3a4")
 hue_variation_max = 1.0
 
+[node name="Items" type="Control" parent="BlackHoleScreen" unique_id=1833190070]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="SpawnManager" type="Node" parent="." unique_id=1483495496 node_paths=PackedStringArray("spawn_location", "delay_timer")]
 script = ExtResource("5_y2wr3")
 spawn_location = NodePath("../MainScreen/SpawnLocation")
@@ -122,6 +101,38 @@ delay_timer = NodePath("Delay")
 
 [node name="Delay" type="Timer" parent="SpawnManager" unique_id=133334912]
 one_shot = true
+
+[node name="DragManager" type="Node" parent="." unique_id=1896205840]
+script = ExtResource("11_7aemw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=396249878]
+
+[node name="LeftCollider" type="Control" parent="CanvasLayer" unique_id=1683079092]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 120.0
+offset_bottom = 648.0
+
+[node name="RightCollider" type="Control" parent="CanvasLayer" unique_id=1664569643]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1032.0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="LeftArrow" type="TextureRect" parent="CanvasLayer" unique_id=686653009]
+offset_left = 997.0
+offset_top = 301.0
+offset_right = 1125.0
+offset_bottom = 429.0
+texture = ExtResource("1_ufc4x")
+
+[node name="RightArrow" type="TextureRect" parent="CanvasLayer" unique_id=521227202]
+offset_left = 30.0
+offset_top = 301.0
+offset_right = 158.0
+offset_bottom = 429.0
+texture = ExtResource("1_ufc4x")
 
 [connection signal="mouse_entered" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_exited"]

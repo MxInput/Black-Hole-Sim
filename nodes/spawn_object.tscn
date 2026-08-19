@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://c7jyk7tq5poad"]
 
 [ext_resource type="Texture2D" uid="uid://drd8mvfxwyuo7" path="res://images/cookie.png" id="1_hsu0c"]
+[ext_resource type="Script" uid="uid://dxnuhyd3ul3qg" path="res://nodes/object_handler.gd" id="2_nm4ut"]
 
 [node name="SpawnObject" type="TextureRect" unique_id=731976408]
 offset_right = 44.0
 offset_bottom = 40.0
 texture = ExtResource("1_hsu0c")
 expand_mode = 1
+script = ExtResource("2_nm4ut")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
