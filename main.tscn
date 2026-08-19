@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://c5sv13gff6rbv"]
+
+[ext_resource type="Texture2D" uid="uid://bspdrlt17ifas" path="res://icon.svg" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://o8g4ulukatvo" path="res://camera_manager.gd" id="2_h2yge"]
+
+[node name="Main" type="Node" unique_id=670787970]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1105528811]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=396249878]
+
+[node name="LeftCollider" type="Control" parent="CanvasLayer" unique_id=1683079092]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 120.0
+offset_bottom = 648.0
+
+[node name="RightCollider" type="Control" parent="CanvasLayer" unique_id=1664569643]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1032.0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="LeftArrow" type="TextureRect" parent="CanvasLayer" unique_id=686653009]
+offset_left = 997.0
+offset_top = 301.0
+offset_right = 1125.0
+offset_bottom = 429.0
+texture = ExtResource("1_0xm2m")
+
+[node name="RightArrow" type="TextureRect" parent="CanvasLayer" unique_id=521227202]
+offset_left = 30.0
+offset_top = 301.0
+offset_right = 158.0
+offset_bottom = 429.0
+texture = ExtResource("1_0xm2m")
+
+[node name="CameraManager" type="Node" parent="." unique_id=510813788 node_paths=PackedStringArray("camera", "main_screen", "black_hole_screen")]
+script = ExtResource("2_h2yge")
+camera = NodePath("../Camera2D")
+main_screen = NodePath("../MainScreen")
+black_hole_screen = NodePath("../BlackHoleScreen")
+
+[node name="MainScreen" type="Node" parent="." unique_id=1798937413]
+
+[node name="Background" type="ColorRect" parent="MainScreen" unique_id=1656360732]
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+color = Color(0.042096525, 0.02544458, 0.17461574, 1)
+
+[node name="TextureRect2" type="TextureRect" parent="MainScreen" unique_id=1569730747]
+offset_left = -376.0
+offset_top = -200.0
+offset_right = -248.0
+offset_bottom = -72.0
+texture = ExtResource("1_0xm2m")
+
+[node name="BlackHoleScreen" type="Node" parent="." unique_id=768830475]
+
+[node name="Background" type="ColorRect" parent="BlackHoleScreen" unique_id=1433554629]
+offset_left = 576.0
+offset_top = -324.0
+offset_right = 1728.0
+offset_bottom = 324.0
+color = Color(0.042096525, 0.02544458, 0.17461574, 1)
+
+[node name="TextureRect" type="TextureRect" parent="BlackHoleScreen" unique_id=525500286]
+offset_left = 1153.0
+offset_right = 1281.0
+offset_bottom = 128.0
+texture = ExtResource("1_0xm2m")
+
+[connection signal="mouse_entered" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_exited"]
+[connection signal="mouse_entered" from="CanvasLayer/RightCollider" to="CameraManager" method="_on_right_collider_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/RightCollider" to="CameraManager" method="_on_right_collider_mouse_exited"]
