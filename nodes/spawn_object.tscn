@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c7jyk7tq5poad"]
+
+[ext_resource type="Texture2D" uid="uid://bhiatpqrbdpgq" path="res://images/fish.png" id="1_hsu0c"]
+
+[node name="SpawnObject" type="TextureRect" unique_id=731976408]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_hsu0c")

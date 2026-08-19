@@ -32,11 +32,13 @@ func _process(delta: float) -> void:
 		
 		if (current_screen == black_hole_screen):
 			if (camera.position.x >= (target_pos + offset).x):
+				camera.position = (target_pos + offset);
 				current_screen = null;
 				finished = true;
 				time = 0.0;
 		else:
 			if (camera.position.x <= (target_pos + offset).x):
+				camera.position = (target_pos + offset);
 				current_screen = null;
 				finished = true;
 				time = 0.0;
