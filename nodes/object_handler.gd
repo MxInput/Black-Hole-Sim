@@ -1,5 +1,7 @@
 extends TextureRect
 
+@export var particles : CPUParticles2D;
+
 @onready var tree = get_tree();
 
 var drag_manager : Node;
@@ -20,11 +22,13 @@ func _input(event: InputEvent) -> void:
 	if (hovered_over && event is InputEventMouseButton && event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT && !in_black_hole):
 		if (drag_manager.current_held_object == null):
 			drag_manager.current_held_object = self;
-	
-	if (hovered_over && event is InputEventMouseButton && event.is_released() && in_black_hole):
+			
+	if (event is InputEventMouseButton && event.is_released() && in_black_hole):
 		var temp_pos = global_position;
 		self.reparent(final_home);
 		global_position = temp_pos;
+		
+		particles.visible = true;
 		
 	if (event is InputEventMouseButton && event.is_released() && event.button_index == MOUSE_BUTTON_LEFT):
 		if (drag_manager.current_held_object == self):

@@ -2,13 +2,51 @@
 
 [ext_resource type="Texture2D" uid="uid://drd8mvfxwyuo7" path="res://images/cookie.png" id="1_hsu0c"]
 [ext_resource type="Script" uid="uid://dxnuhyd3ul3qg" path="res://nodes/object_handler.gd" id="2_nm4ut"]
+[ext_resource type="Texture2D" uid="uid://dfrcg5vcqequ8" path="res://images/circle.png" id="3_vf8rn"]
+[ext_resource type="Script" uid="uid://dc50i2eyv8lkp" path="res://nodes/explosion.gd" id="4_c2j12"]
 
-[node name="SpawnObject" type="TextureRect" unique_id=731976408]
+[sub_resource type="Gradient" id="Gradient_vf8rn"]
+colors = PackedColorArray(1, 1, 1, 1, 0.09998604, 0.09998598, 0.099985994, 0.25490198)
+
+[node name="SpawnObject" type="TextureRect" unique_id=731976408 node_paths=PackedStringArray("particles")]
 offset_right = 44.0
 offset_bottom = 40.0
 texture = ExtResource("1_hsu0c")
 expand_mode = 1
 script = ExtResource("2_nm4ut")
+particles = NodePath("Particles")
+
+[node name="Particles" type="CPUParticles2D" parent="." unique_id=1799682497]
+visible = false
+position = Vector2(30, 20)
+amount = 30
+texture = ExtResource("3_vf8rn")
+randomness = 1.0
+spread = 180.0
+gravity = Vector2(0, 60)
+initial_velocity_min = 20.0
+initial_velocity_max = 59.41
+scale_amount_min = 0.01
+scale_amount_max = 0.02
+color_ramp = SubResource("Gradient_vf8rn")
+
+[node name="Explosion" type="CPUParticles2D" parent="." unique_id=81476944]
+position = Vector2(30, 20)
+emitting = false
+amount = 30
+texture = ExtResource("3_vf8rn")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 70.0
+scale_amount_min = 0.01
+scale_amount_max = 0.02
+color_ramp = SubResource("Gradient_vf8rn")
+script = ExtResource("4_c2j12")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="finished" from="Explosion" to="Explosion" method="_on_finished"]

@@ -20,6 +20,9 @@ var time := 0.0;
 @export var item_container : Control;
 @export var spawn_container : Control;
 
+@export var left_arrow : TextureRect;
+@export var right_arrow : TextureRect;
+
 func move_camera() -> void:
 	if (!contact):
 		var background = current_screen.find_child("Background");
@@ -30,14 +33,14 @@ func _ready() -> void:
 	current_screen = main_screen;
 	
 func _process(delta: float) -> void:
-	time += delta/8;
-	
 	if (!finished):
+		time += delta/2;
 		var new_pos = lerp(camera.position, (target_pos + offset), time);
 		camera.position = new_pos;
 		
 		if (current_screen == black_hole_screen):
 			on_main = false;
+			left_arrow.visible = false;
 			if (drag_manager.current_held_object != null):
 				drag_manager.current_held_object.in_black_hole = true;
 				drag_manager.current_held_object.reparent(item_container);
@@ -46,7 +49,10 @@ func _process(delta: float) -> void:
 				current_screen = null;
 				finished = true;
 				time = 0.0;
+				
+				right_arrow.visible = true;
 		else:
+			right_arrow.visible = false;
 			on_main = true;
 			if (drag_manager.current_held_object != null):
 				drag_manager.current_held_object.in_black_hole = false;
@@ -54,11 +60,12 @@ func _process(delta: float) -> void:
 			if (camera.position.x <= (target_pos + offset).x):
 				camera.position = (target_pos + offset);
 				current_screen = null;
+				left_arrow.visible = true;
 				finished = true;
 				time = 0.0;
 	
 func _on_left_collider_mouse_entered() -> void:
-	if (current_screen != main_screen):
+	if (current_screen != main_screen && finished):
 		current_screen = main_screen;
 	
 	if (finished):
@@ -67,7 +74,7 @@ func _on_left_collider_mouse_entered() -> void:
 	contact = true;
 
 func _on_right_collider_mouse_entered() -> void:
-	if (current_screen != black_hole_screen):
+	if (current_screen != black_hole_screen && finished):
 		current_screen = black_hole_screen;
 	
 	if (finished):

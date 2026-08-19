@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c5sv13gff6rbv"]
 
-[ext_resource type="Texture2D" uid="uid://bspdrlt17ifas" path="res://icon.svg" id="1_ufc4x"]
+[ext_resource type="FontFile" uid="uid://dd60604yhttad" path="res://fonts/SunnySpellsBasicRegular-Yz1Wv.ttf" id="2_h0f1k"]
 [ext_resource type="Script" uid="uid://o8g4ulukatvo" path="res://camera_manager.gd" id="2_k8dvw"]
 [ext_resource type="Texture2D" uid="uid://cyk6cso8lvw6r" path="res://images/black_hole.png" id="3_y2wr3"]
 [ext_resource type="Texture2D" uid="uid://dfrcg5vcqequ8" path="res://images/circle.png" id="4_k8dvw"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cgkkx6y1eawi4" path="res://images/frog.png" id="9_h1sum"]
 [ext_resource type="Texture2D" uid="uid://drd8mvfxwyuo7" path="res://images/cookie.png" id="10_h0f1k"]
 [ext_resource type="Script" uid="uid://cu67f3261iqg3" path="res://nodes/drag_manager.gd" id="11_7aemw"]
+[ext_resource type="Texture2D" uid="uid://gxtkuwlwrq40" path="res://images/arrow_basic_e.svg" id="12_h0f1k"]
 [ext_resource type="Script" uid="uid://ig5oskn4bqy6" path="res://nodes/inhale_manager.gd" id="12_h1sum"]
 
 [sub_resource type="Gradient" id="Gradient_kc3a4"]
@@ -21,7 +22,7 @@ colors = PackedColorArray(0, 0, 0, 0.3764706, 0.02374674, 0.006960955, 0.1130927
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1105528811]
 
-[node name="CameraManager" type="Node" parent="." unique_id=510813788 node_paths=PackedStringArray("camera", "main_screen", "black_hole_screen", "drag_manager", "item_container", "spawn_container")]
+[node name="CameraManager" type="Node" parent="." unique_id=510813788 node_paths=PackedStringArray("camera", "main_screen", "black_hole_screen", "drag_manager", "item_container", "spawn_container", "left_arrow", "right_arrow")]
 script = ExtResource("2_k8dvw")
 camera = NodePath("../Camera2D")
 main_screen = NodePath("../MainScreen")
@@ -29,6 +30,8 @@ black_hole_screen = NodePath("../BlackHoleScreen")
 drag_manager = NodePath("../DragManager")
 item_container = NodePath("../BlackHoleScreen/Items")
 spawn_container = NodePath("../MainScreen/SpawnLocation")
+left_arrow = NodePath("../CanvasLayer/LeftArrow")
+right_arrow = NodePath("../CanvasLayer/RightArrow")
 
 [node name="MainScreen" type="Node" parent="." unique_id=1798937413]
 
@@ -47,6 +50,19 @@ offset_top = -251.0
 offset_right = 290.0
 offset_bottom = 249.0
 mouse_filter = 1
+
+[node name="Instructions" type="RichTextLabel" parent="MainScreen" unique_id=694919133]
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = -203.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_h0f1k")
+theme_override_font_sizes/normal_font_size = 40
+text = "Drag the items that spawn to the next screen
+Touch the side when an arrow appears to move between screens"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BlackHoleScreen" type="Node" parent="." unique_id=768830475]
 
@@ -99,6 +115,24 @@ offset_left = 1152.0
 offset_right = 1192.0
 offset_bottom = 40.0
 
+[node name="Explosions" type="Control" parent="BlackHoleScreen/Items" unique_id=1045368474]
+anchors_preset = 0
+offset_left = 1152.0
+offset_right = 1192.0
+offset_bottom = 40.0
+
+[node name="Instructions" type="RichTextLabel" parent="BlackHoleScreen" unique_id=100660459]
+offset_left = 576.0
+offset_top = -324.0
+offset_right = 1728.0
+offset_bottom = -224.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_h0f1k")
+theme_override_font_sizes/normal_font_size = 40
+text = "Drop the item here."
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SpawnManager" type="Node" parent="." unique_id=1483495496 node_paths=PackedStringArray("spawn_location", "delay_timer")]
 script = ExtResource("5_y2wr3")
 spawn_location = NodePath("../MainScreen/SpawnLocation")
@@ -135,20 +169,23 @@ offset_left = 997.0
 offset_top = 301.0
 offset_right = 1125.0
 offset_bottom = 429.0
-texture = ExtResource("1_ufc4x")
+texture = ExtResource("12_h0f1k")
 
 [node name="RightArrow" type="TextureRect" parent="CanvasLayer" unique_id=521227202]
+visible = false
 offset_left = 30.0
 offset_top = 301.0
 offset_right = 158.0
 offset_bottom = 429.0
-texture = ExtResource("1_ufc4x")
+texture = ExtResource("12_h0f1k")
+flip_h = true
 
-[node name="InhaleManager" type="Node" parent="." unique_id=1316155058 node_paths=PackedStringArray("drag_manager", "spawn_manager", "final_container")]
+[node name="InhaleManager" type="Node" parent="." unique_id=1316155058 node_paths=PackedStringArray("drag_manager", "spawn_manager", "final_container", "explosions")]
 script = ExtResource("12_h1sum")
 drag_manager = NodePath("../DragManager")
 spawn_manager = NodePath("../SpawnManager")
 final_container = NodePath("../BlackHoleScreen/Items/Final")
+explosions = NodePath("../BlackHoleScreen/Items/Explosions")
 
 [connection signal="mouse_entered" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_exited"]
