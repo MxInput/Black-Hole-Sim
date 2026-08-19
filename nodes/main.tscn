@@ -20,11 +20,14 @@ colors = PackedColorArray(0, 0, 0, 0.3764706, 0.02374674, 0.006960955, 0.1130927
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1105528811]
 
-[node name="CameraManager" type="Node" parent="." unique_id=510813788 node_paths=PackedStringArray("camera", "main_screen", "black_hole_screen")]
+[node name="CameraManager" type="Node" parent="." unique_id=510813788 node_paths=PackedStringArray("camera", "main_screen", "black_hole_screen", "drag_manager", "item_container", "spawn_container")]
 script = ExtResource("2_k8dvw")
 camera = NodePath("../Camera2D")
 main_screen = NodePath("../MainScreen")
 black_hole_screen = NodePath("../BlackHoleScreen")
+drag_manager = NodePath("../DragManager")
+item_container = NodePath("../BlackHoleScreen/Items")
+spawn_container = NodePath("../MainScreen/SpawnLocation")
 
 [node name="MainScreen" type="Node" parent="." unique_id=1798937413]
 

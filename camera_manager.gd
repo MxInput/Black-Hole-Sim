@@ -2,6 +2,8 @@ extends Node
 
 @export var camera : Camera2D;
 
+var on_main := true;
+
 @export var main_screen : Node;
 @export var black_hole_screen : Node;
 
@@ -15,6 +17,8 @@ var offset := Vector2(576, 324);
 var time := 0.0;
 
 @export var drag_manager : Node;
+@export var item_container : Control;
+@export var spawn_container : Control;
 
 func move_camera() -> void:
 	if (!contact):
@@ -33,12 +37,20 @@ func _process(delta: float) -> void:
 		camera.position = new_pos;
 		
 		if (current_screen == black_hole_screen):
+			on_main = false;
+			if (drag_manager.current_held_object != null):
+				drag_manager.current_held_object.in_black_hole = true;
+				drag_manager.current_held_object.reparent(item_container);
 			if (camera.position.x >= (target_pos + offset).x):
 				camera.position = (target_pos + offset);
 				current_screen = null;
 				finished = true;
 				time = 0.0;
 		else:
+			on_main = true;
+			if (drag_manager.current_held_object != null):
+				drag_manager.current_held_object.in_black_hole = false;
+				drag_manager.current_held_object.reparent(spawn_container);
 			if (camera.position.x <= (target_pos + offset).x):
 				camera.position = (target_pos + offset);
 				current_screen = null;
