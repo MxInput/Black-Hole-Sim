@@ -3,7 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://bspdrlt17ifas" path="res://icon.svg" id="1_ufc4x"]
 [ext_resource type="Script" uid="uid://o8g4ulukatvo" path="res://camera_manager.gd" id="2_k8dvw"]
 [ext_resource type="Texture2D" uid="uid://cyk6cso8lvw6r" path="res://images/black_hole.png" id="3_y2wr3"]
-[ext_resource type="Texture2D" uid="uid://dfrcg5vcqequ8" path="res://images/[CITYPNG.COM]Download White Circle PNG - 1500x1500.png" id="4_k8dvw"]
+[ext_resource type="Texture2D" uid="uid://dfrcg5vcqequ8" path="res://images/circle.png" id="4_k8dvw"]
+[ext_resource type="Script" uid="uid://cnoskotxht0gt" path="res://nodes/spawn_manager.gd" id="5_y2wr3"]
+[ext_resource type="PackedScene" uid="uid://c7jyk7tq5poad" path="res://nodes/spawn_object.tscn" id="6_sybi7"]
+[ext_resource type="Texture2D" uid="uid://bhiatpqrbdpgq" path="res://images/fish.png" id="7_rshm7"]
+[ext_resource type="Texture2D" uid="uid://bot5e6f6segio" path="res://images/daisy.png" id="8_7aemw"]
+[ext_resource type="Texture2D" uid="uid://cgkkx6y1eawi4" path="res://images/frog.png" id="9_h1sum"]
+[ext_resource type="Texture2D" uid="uid://drd8mvfxwyuo7" path="res://images/cookie.png" id="10_h0f1k"]
 
 [sub_resource type="Gradient" id="Gradient_kc3a4"]
 offsets = PackedFloat32Array(0.47530866, 1)
@@ -57,19 +63,12 @@ offset_right = 576.0
 offset_bottom = 324.0
 color = Color(0.042096525, 0.02544458, 0.17461574, 1)
 
-[node name="TextureRect2" type="TextureRect" parent="MainScreen" unique_id=1569730747]
-offset_left = -376.0
-offset_top = -200.0
-offset_right = -248.0
-offset_bottom = -72.0
-texture = ExtResource("1_ufc4x")
-
 [node name="SpawnLocation" type="Control" parent="MainScreen" unique_id=1209775310]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -380.0
+offset_left = -283.0
 offset_top = -251.0
-offset_right = 420.0
+offset_right = 290.0
 offset_bottom = 249.0
 
 [node name="BlackHoleScreen" type="Node" parent="." unique_id=768830475]
@@ -110,6 +109,19 @@ scale_amount_min = 0.02
 scale_amount_max = 0.05
 color_ramp = SubResource("Gradient_kc3a4")
 hue_variation_max = 1.0
+
+[node name="SpawnManager" type="Node" parent="." unique_id=1483495496 node_paths=PackedStringArray("spawn_location", "delay_timer")]
+script = ExtResource("5_y2wr3")
+spawn_location = NodePath("../MainScreen/SpawnLocation")
+spawn_object = ExtResource("6_sybi7")
+fish_img = ExtResource("7_rshm7")
+daisy_img = ExtResource("8_7aemw")
+frog_img = ExtResource("9_h1sum")
+cookie_img = ExtResource("10_h0f1k")
+delay_timer = NodePath("Delay")
+
+[node name="Delay" type="Timer" parent="SpawnManager" unique_id=133334912]
+one_shot = true
 
 [connection signal="mouse_entered" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_exited"]
