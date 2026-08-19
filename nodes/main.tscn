@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cgkkx6y1eawi4" path="res://images/frog.png" id="9_h1sum"]
 [ext_resource type="Texture2D" uid="uid://drd8mvfxwyuo7" path="res://images/cookie.png" id="10_h0f1k"]
 [ext_resource type="Script" uid="uid://cu67f3261iqg3" path="res://nodes/drag_manager.gd" id="11_7aemw"]
+[ext_resource type="Script" uid="uid://ig5oskn4bqy6" path="res://nodes/inhale_manager.gd" id="12_h1sum"]
 
 [sub_resource type="Gradient" id="Gradient_kc3a4"]
 offsets = PackedFloat32Array(0.47530866, 1)
@@ -92,6 +93,12 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="Final" type="Control" parent="BlackHoleScreen/Items" unique_id=1809423095]
+anchors_preset = 0
+offset_left = 1152.0
+offset_right = 1192.0
+offset_bottom = 40.0
+
 [node name="SpawnManager" type="Node" parent="." unique_id=1483495496 node_paths=PackedStringArray("spawn_location", "delay_timer")]
 script = ExtResource("5_y2wr3")
 spawn_location = NodePath("../MainScreen/SpawnLocation")
@@ -136,6 +143,12 @@ offset_top = 301.0
 offset_right = 158.0
 offset_bottom = 429.0
 texture = ExtResource("1_ufc4x")
+
+[node name="InhaleManager" type="Node" parent="." unique_id=1316155058 node_paths=PackedStringArray("drag_manager", "spawn_manager", "final_container")]
+script = ExtResource("12_h1sum")
+drag_manager = NodePath("../DragManager")
+spawn_manager = NodePath("../SpawnManager")
+final_container = NodePath("../BlackHoleScreen/Items/Final")
 
 [connection signal="mouse_entered" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/LeftCollider" to="CameraManager" method="_on_left_collider_mouse_exited"]
